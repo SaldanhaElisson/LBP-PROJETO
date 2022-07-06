@@ -1,3 +1,5 @@
+
+#include <stdio.h>
 #include <math.h>
 #include "pgm.h"
 
@@ -8,7 +10,13 @@ void filtrolbp(struct pgm *img, struct pgm *fil) {
   fil->r = img->r;
   fil->c = img->c;
   fil->mv = 255;
-  fil->pData = (unsigned char *)malloc(fil->r * fil->c * sizeof(unsigned char));
+  fil->pData = (unsigned char *)calloc(fil->r * fil->c, sizeof(unsigned char));
+
+  /*  
+  000
+  000
+  000
+  */
 
   // Execução do filtro LBP
   int l = fil->r, c = fil->c;  // linhas e colunas
@@ -25,10 +33,10 @@ void filtrolbp(struct pgm *img, struct pgm *fil) {
       } else if (!(i % c) && k == -1) {       // esquerdo
       } else if (i > (l * c) - c && j == 1) { // inferior
       } else if (!((i + 1) % c) && k == 1) {  // direito
-      } else
+      } else {
         bjanela = *(img->pData + i + k + j * c);
-
-      if (bjanela >= *(img->pData + i)) { // metodo comparativo
+      }
+      if (bjanela  >= *(img->pData + i)) { // metodo comparativo
         soma += pow(2, pos);
       }
       pos++;
@@ -62,11 +70,14 @@ void filtrolbp(struct pgm *img, struct pgm *fil) {
 
 void histogram(unsigned char *m, int l, int c, unsigned char *hist) {
   for (int i = 0; i < l * c; i++) {
-    *(hist + *(m + i)) += 1;
+    *(hist + *(m + i)) += 1 ;
   }
-
-   for (int i = 0; i < l * c; i++) {
-    printf("%d, ", *(hist + *(m + i)));
-  }
-
+  
 }
+
+
+
+/* 
+  
+
+*/

@@ -1,11 +1,14 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
+
 #include "pgm.h"
 
 void readPGMImage(struct pgm *pio, char *filename){
 
 	FILE *fp;
 	char ch;
+	// printf("%s", filename);
 
 	if (!(fp = fopen(filename,"r"))){
 		perror("Erro.");
@@ -21,7 +24,7 @@ void readPGMImage(struct pgm *pio, char *filename){
 	
 	fseek(fp,1, SEEK_CUR);
 
-	// não entedi
+	// pra vê se tem comentarios
 	while((ch=getc(fp))=='#'){
 		while( (ch=getc(fp))!='\n');
 	}

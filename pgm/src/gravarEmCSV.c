@@ -1,10 +1,23 @@
-void (const unsigned char * hist){
+#include <stdio.h>
+#include <stdlib.h>
+
+void gravarEmCSV(const unsigned char *const hist, const int r, const int c, char *const type){
     FILE *arquivoCVS;
 
-    arquivoCSV = fopen("desafio.csv, w");
+    // adcionar um arquivo no fim de curso
+    arquivoCVS = fopen("desafio.csv", "w+b");
+    
 
-    fwrite(pio->pData, sizeof(unsigned char),pio->c * pio->r, fp);
+    for(int i = 0; i < 255; i++){
+        // printf("%d, ", *(hist+i));
+        fprintf(arquivoCVS, "%d,", *(hist+i));
+    }
 
-    fclose(arquivoCSV);
+    // verificando se está pegando o numero 
+    printf("aqui %c", type[6]);
+
+    fprintf(arquivoCVS, "aqui %c", type[6]);
+
+    fclose(arquivoCVS);
 
 }
