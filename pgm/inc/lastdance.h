@@ -11,5 +11,5 @@ void histogram(unsigned char *m, int l, int c, unsigned char *hist);
 void readPGMImage(struct pgm *pio, char *filename);
 void writePGMImage(struct pgm *pio, char *filename);
 void viewPGMImage(struct pgm *pio);
-void gravarEmCSV(const unsigned char *const , const int r, const int c,  char *const);
+void gravarEmCSV(const unsigned char *const , char *const);
 #endif // __LISTA05_H_
