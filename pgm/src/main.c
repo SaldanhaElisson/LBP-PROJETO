@@ -40,30 +40,12 @@ int main(int argc, char *argv[]){
 			// printf("%s \n", teste[i]);
 			readPGMImage(&img, teste[i]);
 			filtrolbp(&img, filterImg);
-			hist = malloc(TAMCHAR * sizeof(unsigned int));
+			hist = calloc(TAMCHAR, sizeof(unsigned int));
 			histogram(filterImg->pData, filterImg->r, filterImg->c, hist);
 			gravarEmCSV(hist, filterImg->r, filterImg->c, teste[i]);
 	}
-
-	for(int i = 0; i < 200; i++){
-		filter->(pData+i);
-	}
-
 	
-
     closedir(dir);
-
-	// writePGMImage(&img, argv[2]);
-	// viewPGMImage(&img);
-
-
-
-
-	// // lendo histograma
-	//  for (int i = 0; i < 255; i++) {
-    // 	printf("%d, ", *(hist+i));
-  	// }
-
 
 	return 0;
 

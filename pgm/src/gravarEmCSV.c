@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void gravarEmCSV(const unsigned char *const hist, const int r, const int c, char *const type){
+void gravarEmCSV(const unsigned char * hist, const int r, const int c, char *const type){
     FILE *arquivoCVS;
 
     // adcionar um arquivo no fim de curso
