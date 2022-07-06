@@ -45,6 +45,10 @@ int main(int argc, char *argv[]){
 			gravarEmCSV(hist, filterImg->r, filterImg->c, teste[i]);
 	}
 
+	for(int i = 0; i < 200; i++){
+		filter->(pData+i);
+	}
+
 	
 
     closedir(dir);

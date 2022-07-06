@@ -72,12 +72,4 @@ void histogram(unsigned char *m, int l, int c, unsigned char *hist) {
   for (int i = 0; i < l * c; i++) {
     *(hist + *(m + i)) += 1 ;
   }
-  
 }
-
-
-
-/* 
-  
-
-*/
