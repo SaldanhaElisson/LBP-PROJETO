@@ -1,7 +1,5 @@
-
-#include <stdio.h>
-#include <math.h>
 #include "pgm.h"
+#include <math.h>
 
 void filtrolbp(struct pgm *img, struct pgm *fil) {
   // Filtro LBP. Janela de 8 bits. Método Comparativo
@@ -18,6 +16,7 @@ void filtrolbp(struct pgm *img, struct pgm *fil) {
   000
   */
 
+
   // Execução do filtro LBP
   int l = fil->r, c = fil->c;  // linhas e colunas
   unsigned char soma, bjanela; // soma dos bits das janelas e bit da janela
@@ -33,11 +32,11 @@ void filtrolbp(struct pgm *img, struct pgm *fil) {
       } else if (!(i % c) && k == -1) {       // esquerdo
       } else if (i > (l * c) - c && j == 1) { // inferior
       } else if (!((i + 1) % c) && k == 1) {  // direito
-      } else {
+      } else { // caso feliz 
         bjanela = *(img->pData + i + k + j * c);
       }
       if (bjanela  >= *(img->pData + i)) { // metodo comparativo
-        soma += pow(2, pos);
+        soma += pow(2, pos); 
       }
       pos++;
 

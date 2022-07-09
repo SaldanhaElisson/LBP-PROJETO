@@ -1,8 +1,5 @@
 #include "lastdance.h"
-#include <math.h>
 
-#include <dirent.h>
-#include <string.h>
 
 #define TAMCHAR 256
 #define MAXFILESNAMES 1000
@@ -10,10 +7,11 @@
 
 int main(int argc, char *argv[]){
 
-	struct pgm img;
-    struct pgm *filterImg;
-    unsigned  char *hist;
-	char fileNames[MAXFILESNAMES][MAXCHARNAME];
+	struct pgm img; // arquivo original
+    struct pgm *filterImg; // arquivoDepoisDeFIltrado
+    unsigned  char *hist; // histograma 
+	char fileNames[MAXFILESNAMES][MAXCHARNAME]; // guargar os nomes de arquivos diretorios
+
 
     filterImg = malloc(sizeof(struct pgm));
 
@@ -33,15 +31,15 @@ int main(int argc, char *argv[]){
 					
     }
 
+
 	for(int i = 2; i < count; i++){
 			// printf("%s \n", teste[i]);
-			readPGMImage(&img, fileNames[i]);
-			filtrolbp(&img, filterImg);
-			hist = malloc(TAMCHAR * sizeof(unsigned int));
+			readPGMImage(&img, fileNames[i]); // pegar os dados da imagem e passar para estrutura pmg declarada como img
+			filtrolbp(&img, filterImg);  
+			hist = calloc(TAMCHAR, sizeof(unsigned int));
 			histogram(filterImg->pData, filterImg->r, filterImg->c, hist);
 			gravarEmCSV(hist, fileNames[i]);
 	}
-
 
     closedir(dir);
 

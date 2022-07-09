@@ -22,6 +22,7 @@ void readPGMImage(struct pgm *pio, char *filename){
 	
 	pio->tipo = getc(fp)-48;
 	
+	
 	fseek(fp,1, SEEK_CUR);
 
 	// pra vê se tem comentarios
