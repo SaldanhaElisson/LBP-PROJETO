@@ -1,5 +1,5 @@
 # Name of the project
-PROJ_NAME=teste
+PROJ_NAME=main
  
 # .c files
 C_SOURCE=$(wildcard ./pgm/src/*.c)
