@@ -1,60 +1,50 @@
-#include "lastdance.h"
+#include "header.h"
 
+int main() {
 
-#define TAMCHAR 256
-#define MAXFILESNAMES 1000
-#define MAXCHARNAME 100
+  struct pgm img, filterImg;
+  unsigned char *hist;
+  char *fileNames;
+  char *path = "./datasets/oncotex_pgm/"; // String diretorio
+  char *nome = "Histograma.csv";          // Nome do arquivo
 
-int main(int argc, char *argv[]){
+  if (!strstr(nome, ".csv")) {
+    printf("Arquivo não está em formato .csv\n\n");
+    exit(1);
+  }
 
-	struct pgm img; // arquivo original
-    struct pgm *filterImg; // arquivoDepoisDeFIltrado
-    unsigned  char *hist; // histograma 
-	char fileNames[MAXFILESNAMES][MAXCHARNAME]; // guargar os nomes de arquivos diretorios
+  // Estrutura para abrir diretorio no caminho dado
+  DIR *dir;
+  struct dirent *lsdir;
+  dir = opendir(path);
+  if (!dir) {
+    printf("Diretorio não encontrado\n\n");
+    exit(1);
+  }
 
+  // Laço para selecionar os arquivos do diretorio
+  int tam, count = 0;
+  while ((lsdir = readdir(dir)) != NULL) {
 
-    filterImg = malloc(sizeof(struct pgm));
+    // Aloca espaço para o nome e caminho do arquivo
+    tam = strlen(path) + strlen(lsdir->d_name) + 1;
+    fileNames = malloc(tam * sizeof(char));
+    strcpy(fileNames, path);          // adiciona string caminho
+    strcat(fileNames, lsdir->d_name); // concatena string nome do arquivo
 
-	
-	DIR *dir;
-    struct dirent *lsdir;
+    if (strstr(lsdir->d_name, ".pgm")) { // Filtra somente arquivos .pgm
 
-    dir = opendir("./datasets/oncotex_pgm");
-
-	int count = 0;
-    /* print all the files and directories within directory */
-    while ( ( lsdir = readdir(dir) ) != NULL )
-    {
-		strcpy(fileNames[count],"./datasets/oncotex_pgm/");
-		strcat(fileNames[count], lsdir->d_name);
-		count++;
-					
+      readPGMImage(&img, fileNames);
+      filtrolbp(&img, &filterImg);
+      hist = calloc(img.mv, sizeof(unsigned char));
+      histogram(&filterImg, hist);
+      gravarCSV(hist, lsdir->d_name, nome, count);
+      count++;
     }
+  }
 
+  free(fileNames);
+  closedir(dir);
 
-	for(int i = 2; i < count; i++){
-			// printf("%s \n", teste[i]);
-			readPGMImage(&img, fileNames[i]); // pegar os dados da imagem e passar para estrutura pmg declarada como img
-			filtrolbp(&img, filterImg);  
-			hist = calloc(TAMCHAR, sizeof(unsigned int));
-			histogram(filterImg->pData, filterImg->r, filterImg->c, hist);
-			gravarEmCSV(hist, fileNames[i]);
-	}
-
-    closedir(dir);
-
-	// writePGMImage(&img, argv[2]);
-	// viewPGMImage(&img);
-
-
-
-
-	// // lendo histograma
-	//  for (int i = 0; i < 255; i++) {
-    // 	printf("%d, ", *(hist+i));
-  	// }
-
-
-	return 0;
-
+  return 0;
 }

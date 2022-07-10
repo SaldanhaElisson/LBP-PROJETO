@@ -12,5 +12,4 @@ struct pgm{
 	unsigned char *pData;
 };
 
-
 #endif // __LISTA05_H_
