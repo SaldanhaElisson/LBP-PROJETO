@@ -1,4 +1,4 @@
-#include "header.h"
+#include "teste.h"
 
 void filtrolbp(const struct pgm *img, struct pgm *fil) {
   // Filtro LBP. Janela de 8 bits. Método Comparativo

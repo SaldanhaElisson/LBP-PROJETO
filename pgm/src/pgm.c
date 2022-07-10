@@ -1,4 +1,4 @@
-#include "pgm.h"
+#include "teste.h"
 #include <stdio.h>
 #include <stdlib.h>
 

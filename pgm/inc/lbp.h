@@ -1,7 +1,7 @@
-#ifndef __HEADER_H_
-#define __HEADER_H_
+#ifndef __LBP_H_
+#define __LBP_H_
 
-#include "pgm.h"
+#include "teste.h"
 #include <dirent.h>
 #include <math.h>
 #include <stdio.h>

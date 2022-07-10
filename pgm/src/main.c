@@ -1,12 +1,23 @@
-#include "header.h"
+#include "lbp.h"
 
-int main() {
+int main(int argc, char *argv[]) {
 
   struct pgm img, filterImg;
   unsigned char *hist;
   char *fileNames;
-  char *path = "./datasets/oncotex_pgm/"; // String diretorio
-  char *nome = "Histograma.csv";          // Nome do arquivo
+  char *path; // String diretorio
+  char *nome;          // Nome do arquivo
+
+
+  if(argc =! 3){
+    puts("Erro.");
+    puts(".Formato: ./buid/main [caminho do diretorio das imagnes] [Nome do arquivo CSV]");
+    exit(10);
+  }
+
+  path = argv[1];
+  nome = argv[2];
+
 
   if (!strstr(nome, ".csv")) {
     printf("Arquivo não está em formato .csv\n\n");
