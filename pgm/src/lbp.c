@@ -1,22 +1,13 @@
+#include "teste.h"
 
-#include <stdio.h>
-#include <math.h>
-#include "pgm.h"
-
-void filtrolbp(struct pgm *img, struct pgm *fil) {
+void filtrolbp(const struct pgm *img, struct pgm *fil) {
   // Filtro LBP. Janela de 8 bits. Método Comparativo
   // Prenchimento da estrutura
   fil->tipo = 5;
   fil->r = img->r;
   fil->c = img->c;
-  fil->mv = 255;
+  fil->mv = 256;
   fil->pData = (unsigned char *)calloc(fil->r * fil->c, sizeof(unsigned char));
-
-  /*  
-  000
-  000
-  000
-  */
 
   // Execução do filtro LBP
   int l = fil->r, c = fil->c;  // linhas e colunas
@@ -34,9 +25,9 @@ void filtrolbp(struct pgm *img, struct pgm *fil) {
       } else if (i > (l * c) - c && j == 1) { // inferior
       } else if (!((i + 1) % c) && k == 1) {  // direito
       } else {
-        bjanela = *(img->pData + i + k + j * c);
+        bjanela = *(img->pData + i + k + j * c); // parte interna
       }
-      if (bjanela  >= *(img->pData + i)) { // metodo comparativo
+      if (bjanela >= *(img->pData + i)) { // metodo comparativo
         soma += pow(2, pos);
       }
       pos++;
@@ -68,8 +59,34 @@ void filtrolbp(struct pgm *img, struct pgm *fil) {
   }
 }
 
-void histogram(unsigned char *m, int l, int c, unsigned char *hist) {
-  for (int i = 0; i < l * c; i++) {
-    *(hist + *(m + i)) += 1 ;
+void histogram(const struct pgm *img, unsigned char *hist) {
+  //hist = calloc(img->mv, sizeof(unsigned char));
+  for (int i = 0; i < img->r * img->c; i++) {
+    *(hist + *(img->pData + i)) += 1;
   }
+}
+
+void gravarCSV(unsigned char *hist, char *const fileName, char *nome,
+               int linha) {
+  FILE *arquivoCVS;
+
+  if (linha == 0) { // Cria ou limpa o arquivo para escrita do CSV
+    arquivoCVS = fopen(nome, "w");
+    if (arquivoCVS == NULL) {
+      printf("Erro na abertura do arquivo.\n\n");
+      exit(1);
+    }
+
+    fclose(arquivoCVS);
+  }
+
+  // Escrevendo no fim do arquivo
+  arquivoCVS = fopen(nome, "a+b");
+  for (int i = 0; i < 256; i++) {
+    fprintf(arquivoCVS, "%d,", *(hist + i));
+  }
+
+  fprintf(arquivoCVS, "%c\n", fileName[0]);
+
+  fclose(arquivoCVS);
 }

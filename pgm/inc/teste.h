@@ -3,6 +3,8 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
+
 
 struct pgm{
 	int tipo;
@@ -11,6 +13,5 @@ struct pgm{
 	int mv;
 	unsigned char *pData;
 };
-
 
 #endif // __LISTA05_H_

@@ -1,6 +1,6 @@
 {
     "files.associations": {
-        "dirent.h": "c"
-    },
-    "C_Cpp.errorSquiggles": "Disabled"
+        "lbp.h": "c",
+        "teste.h": "c"
+    }
 }

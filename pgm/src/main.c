@@ -1,62 +1,61 @@
-#include "lastdance.h"
-#include <math.h>
+#include "lbp.h"
 
-#include <dirent.h>
-#include <string.h>
+int main(int argc, char *argv[]) {
 
-#define TAMCHAR 256
-#define MAXFILESNAMES 1000
-#define MAXCHARNAME 100
+  struct pgm img, filterImg;
+  unsigned char *hist;
+  char *fileNames;
+  char *path; // String diretorio
+  char *nome;          // Nome do arquivo
 
-int main(int argc, char *argv[]){
 
-	struct pgm img;
-    struct pgm *filterImg;
-    unsigned  char *hist;
-	char fileNames[MAXFILESNAMES][MAXCHARNAME];
+  if( (argc) < 3){
+    puts("Erro.");
+    puts(".Formato: ./buid/main [caminho do diretorio das imagnes] [Nome do arquivo CSV]");
+    exit(10);
+  }
 
-    filterImg = malloc(sizeof(struct pgm));
+  path = argv[1];
+  nome = argv[2];
 
-	
-	DIR *dir;
-    struct dirent *lsdir;
 
-    dir = opendir("./datasets/oncotex_pgm");
+  if (!strstr(nome, ".csv")) {
+    printf("Arquivo não está em formato .csv\n\n");
+    exit(1);
+  }
 
-	int count = 0;
-    /* print all the files and directories within directory */
-    while ( ( lsdir = readdir(dir) ) != NULL )
-    {
-		strcpy(fileNames[count],"./datasets/oncotex_pgm/");
-		strcat(fileNames[count], lsdir->d_name);
-		count++;
-					
+  // Estrutura para abrir diretorio no caminho dado
+  DIR *dir;
+  struct dirent *lsdir;
+  dir = opendir(path);
+  if (!dir) {
+    printf("Diretorio não encontrado\n\n");
+    exit(1);
+  }
+
+  // Laço para selecionar os arquivos do diretorio
+  int tam, count = 0;
+  while ((lsdir = readdir(dir)) != NULL) {
+
+    // Aloca espaço para o nome e caminho do arquivo
+    tam = strlen(path) + strlen(lsdir->d_name) + 1;
+    fileNames = malloc(tam * sizeof(char));
+    strcpy(fileNames, path);          // adiciona string caminho
+    strcat(fileNames, lsdir->d_name); // concatena string nome do arquivo
+
+    if (strstr(lsdir->d_name, ".pgm")) { // Filtra somente arquivos .pgm
+
+      readPGMImage(&img, fileNames);
+      filtrolbp(&img, &filterImg);
+      hist = calloc(img.mv, sizeof(unsigned char));
+      histogram(&filterImg, hist);
+      gravarCSV(hist, lsdir->d_name, nome, count);
+      count++;
     }
+  }
 
-	for(int i = 2; i < count; i++){
-			// printf("%s \n", teste[i]);
-			readPGMImage(&img, fileNames[i]);
-			filtrolbp(&img, filterImg);
-			hist = malloc(TAMCHAR * sizeof(unsigned int));
-			histogram(filterImg->pData, filterImg->r, filterImg->c, hist);
-			gravarEmCSV(hist, fileNames[i]);
-	}
+  free(fileNames);
+  closedir(dir);
 
-
-    closedir(dir);
-
-	// writePGMImage(&img, argv[2]);
-	// viewPGMImage(&img);
-
-
-
-
-	// // lendo histograma
-	//  for (int i = 0; i < 255; i++) {
-    // 	printf("%d, ", *(hist+i));
-  	// }
-
-
-	return 0;
-
+  return 0;
 }
