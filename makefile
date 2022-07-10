@@ -17,35 +17,32 @@ CC=gcc
 CC_FLAGS=-c         \
          -W         \
          -Wall      \
-         -ansi      \
          -pedantic
  
 #
 # Compilation and linking
 #
-all: objFolder $(PROJ_NAME)
+all: $(PROJ_NAME)
  
 $(PROJ_NAME): $(OBJ) 
 	@ echo 'Building binary using GCC linker: $@'
-	$(CC) $^ -o $@
+	$(CC) $^ -o $@ -lm
 	@ echo 'Finished building binary: $@'
 	@ echo ' '
  
-./pgm/objects/%.o: ./pgm/src/%.c ./pgm/inc/%.h ../pgm/inc/teste.h
+./pgm/objects/%.o: ./pgm/src/%.c 
 	@ echo 'Building target using GCC compiler: $<'
-	$(CC) $< $(CC_FLAGS) -o $@
+	$(CC) $<  $(CC_FLAGS)  -o $@ -I./pgm/inc -lm
 	@ echo ' '
  
-./pgm/objects/main.o: ./pgm/src/main.c $(H_SOURCE)
-	@ echo 'Building target using GCC compiler: $<'
-	$(CC) $< $(CC_FLAGS) -o $@
-	@ echo ' '
+# ./pgm/objects/main.o: ./pgm/src/main.c $(H_SOURCE)
+# 	@ echo 'Building target using GCC compiler: $<'
+# 	$(CC) $< $(CC_FLAGS) -I./pgm/inc -o $@
+# 	@ echo ' '
  
-objFolder:
-	@ mkdir -p teste
  
 clean:
-	@ $(RM) ./objects/*.o $(PROJ_NAME) *~
+	@ $(RM) ./pgm/objects/*.o $(PROJ_NAME) *~
 	@ rmdir objects
  
 .PHONY: all clean

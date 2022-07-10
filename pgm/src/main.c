@@ -9,7 +9,7 @@ int main(int argc, char *argv[]) {
   char *nome;          // Nome do arquivo
 
 
-  if(argc =! 3){
+  if( (argc) < 3){
     puts("Erro.");
     puts(".Formato: ./buid/main [caminho do diretorio das imagnes] [Nome do arquivo CSV]");
     exit(10);

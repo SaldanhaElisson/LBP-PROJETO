@@ -64,7 +64,6 @@ void readPGMImage(struct pgm *pio, char *filename) {
 
 void writePGMImage(struct pgm *pio, char *filename) {
   FILE *fp;
-  char ch;
 
   if (!(fp = fopen(filename, "wb"))) {
     perror("Erro.");
