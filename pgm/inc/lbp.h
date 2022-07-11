@@ -7,6 +7,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 
 void filtrolbp(const struct pgm *img, struct pgm *fil);
 void histogram(const struct pgm *img, unsigned char *hist);

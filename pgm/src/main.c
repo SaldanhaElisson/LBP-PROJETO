@@ -46,12 +46,21 @@ int main(int argc, char *argv[]) {
     if (strstr(lsdir->d_name, ".pgm")) { // Filtra somente arquivos .pgm
 
       readPGMImage(&img, fileNames);
+
+      //tempo inicio begin = clock();
       filtrolbp(&img, &filterImg);
       hist = calloc(img.mv, sizeof(unsigned char));
       histogram(&filterImg, hist);
+      //tempo fim end = clock();
+      //tempo por imagem end-begin/CLOCKS_PER_SECOND
+      
       gravarCSV(hist, lsdir->d_name, nome, count);
       count++;
     }
+  }
+
+  if (count == 0) {
+  printf("Nenhum arquivo encontrado\n");
   }
 
   free(fileNames);
