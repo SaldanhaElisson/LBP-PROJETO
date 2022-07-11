@@ -1,4 +1,4 @@
-#include "teste.h"
+#include "estrutura.h"
 #include <stdio.h>
 #include <stdlib.h>
 

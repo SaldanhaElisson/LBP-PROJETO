@@ -1,7 +1,7 @@
 #ifndef __LBP_H_
 #define __LBP_H_
 
-#include "teste.h"
+#include "estrutura.h"
 #include <dirent.h>
 #include <math.h>
 #include <stdio.h>
