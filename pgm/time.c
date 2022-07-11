@@ -1,4 +1,4 @@
-#include <stdio.h>
+/*#include <stdio.h>
 #include <time.h>
 
 #define QTDIMG 100
@@ -33,4 +33,4 @@ int main(){
 	printf("Tempo Total: %lf\n",time_total);
 	return 0;
 
-}
+}*/

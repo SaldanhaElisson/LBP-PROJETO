@@ -43,6 +43,5 @@ $(PROJ_NAME): $(OBJ)
  
 clean:
 	@ $(RM) ./pgm/objects/*.o $(PROJ_NAME) *~
-	@ rmdir objects
  
 .PHONY: all clean

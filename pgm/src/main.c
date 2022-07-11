@@ -2,12 +2,16 @@
 
 int main(int argc, char *argv[]) {
 
-  struct pgm img, filterImg;
+  struct pgm img;
   unsigned char *hist;
   char *fileNames;
   char *path; // String diretorio
-  char *nome;          // Nome do arquivo
+  char *nome; // Nome do arquivo
 
+  //Calculo de tempo
+  clock_t begin, end;
+	double time_per_img, time_total=0;
+	long long int a = 999999999;
 
   if( (argc) < 3){
     puts("Erro.");
@@ -17,7 +21,6 @@ int main(int argc, char *argv[]) {
 
   path = argv[1];
   nome = argv[2];
-
 
   if (!strstr(nome, ".csv")) {
     printf("Arquivo não está em formato .csv\n\n");
@@ -46,14 +49,15 @@ int main(int argc, char *argv[]) {
     if (strstr(lsdir->d_name, ".pgm")) { // Filtra somente arquivos .pgm
 
       readPGMImage(&img, fileNames);
-
-      //tempo inicio begin = clock();
-      filtrolbp(&img, &filterImg);
       hist = calloc(img.mv, sizeof(unsigned char));
-      histogram(&filterImg, hist);
-      //tempo fim end = clock();
-      //tempo por imagem end-begin/CLOCKS_PER_SECOND
+
+      begin = clock();
+      filtrolbp(&img, hist);
+      end = clock();
+      time_per_img = (double)(end - begin) / CLOCKS_PER_SEC;
+		  time_total += time_per_img;
       
+
       gravarCSV(hist, lsdir->d_name, nome, count);
       count++;
     }
@@ -62,6 +66,9 @@ int main(int argc, char *argv[]) {
   if (count == 0) {
   printf("Nenhum arquivo encontrado\n");
   }
+
+  printf("Tempo médio: %lf\n",time_total/count+1);
+	printf("Tempo Total: %lf\n",time_total);
 
   free(fileNames);
   closedir(dir);

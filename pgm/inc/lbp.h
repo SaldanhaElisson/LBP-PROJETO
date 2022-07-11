@@ -9,8 +9,7 @@
 #include <string.h>
 #include <time.h>
 
-void filtrolbp(const struct pgm *img, struct pgm *fil);
-void histogram(const struct pgm *img, unsigned char *hist);
+void filtrolbp(const struct pgm *img, unsigned char *hist);
 void readPGMImage(struct pgm *pio, char *filename);
 void writePGMImage(struct pgm *pio, char *filename);
 void viewPGMImage(struct pgm *pio);

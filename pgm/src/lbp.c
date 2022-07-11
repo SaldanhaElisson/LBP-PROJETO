@@ -1,16 +1,14 @@
 #include "estrutura.h"
 
-void filtrolbp(const struct pgm *img, struct pgm *fil) {
+void filtrolbp(const struct pgm *img, unsigned char *hist) {
   // Filtro LBP. Janela de 8 bits. Método Comparativo
   // Prenchimento da estrutura
-  fil->tipo = 5;
-  fil->r = img->r;
-  fil->c = img->c;
-  fil->mv = 256;
-  fil->pData = (unsigned char *)calloc(fil->r * fil->c, sizeof(unsigned char));
+  unsigned char *fil;
+  fil = (unsigned char *)calloc(img->r * img->c, sizeof(unsigned char));
+  //hist = (unsigned char *)calloc((img->mv)+1, sizeof(unsigned char));
 
   // Execução do filtro LBP
-  int l = fil->r, c = fil->c;  // linhas e colunas
+  int l = img->r, c = img->c;  // linhas e colunas
   unsigned char soma, bjanela; // soma dos bits das janelas e bit da janela
   int j, k, sent, pos; // j = posição linha, k = posição coluna, sent = sentido
                        // de rotação, pos = posição do bit na janela
@@ -55,19 +53,14 @@ void filtrolbp(const struct pgm *img, struct pgm *fil) {
         break;
       }
     } while (sent <= 4);
-    *(fil->pData + i) = soma; // Recebe a soma dos bits no ponteiro de saída
+    *(fil + i) = soma; // Recebe a soma dos bits no ponteiro de saída
   }
-}
-
-void histogram(const struct pgm *img, unsigned char *hist) {
-  //hist = calloc(img->mv, sizeof(unsigned char));
+  
   for (int i = 0; i < img->r * img->c; i++) {
-    *(hist + *(img->pData + i)) += 1;
-  }
+    *(hist + *(fil + i)) += 1;}
 }
 
-void gravarCSV(unsigned char *hist, char *const fileName, char *nome,
-               int linha) {
+void gravarCSV(unsigned char *hist, char *const fileName, char *nome,int linha){
   FILE *arquivoCVS;
 
   if (linha == 0) { // Cria ou limpa o arquivo para escrita do CSV
