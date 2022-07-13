@@ -11,7 +11,6 @@ int main(int argc, char *argv[]) {
   //Calculo de tempo
   clock_t begin, end;
 	double time_per_img, time_total=0;
-	long long int a = 999999999;
 
   if( (argc) < 3){
     puts("Erro.");

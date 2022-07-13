@@ -64,7 +64,7 @@ void gravarCSV(unsigned char *hist, char *const fileName, char *nome,int linha){
   FILE *arquivoCVS;
 
   if (linha == 0) { // Cria ou limpa o arquivo para escrita do CSV
-    arquivoCVS = fopen(nome, "w");
+    arquivoCVS = fopen(nome, "w+b");
     if (arquivoCVS == NULL) {
       printf("Erro na abertura do arquivo.\n\n");
       exit(1);
