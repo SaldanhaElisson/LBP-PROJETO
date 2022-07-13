@@ -34,13 +34,7 @@ $(PROJ_NAME): $(OBJ)
 	@ echo 'Building target using GCC compiler: $<'
 	$(CC) $<  $(CC_FLAGS)  -o $@ -I./pgm/inc -lm
 	@ echo ' '
- 
-# ./pgm/objects/main.o: ./pgm/src/main.c $(H_SOURCE)
-# 	@ echo 'Building target using GCC compiler: $<'
-# 	$(CC) $< $(CC_FLAGS) -I./pgm/inc -o $@
-# 	@ echo ' '
- 
- 
+  
 clean:
 	@ $(RM) ./pgm/objects/*.o $(PROJ_NAME) *~
  
